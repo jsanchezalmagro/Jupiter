@@ -2,6 +2,7 @@
 
 import numpy as np
 
+#%%----------------------------------------------------------------------------
 def rcosdesign(beta: float, span: float, sps: float, shape='normal'):
     """ Raised cosine FIR filter design
     Calculates square root raised cosine FIR
@@ -92,12 +93,17 @@ def rcosdesign(beta: float, span: float, sps: float, shape='normal'):
     # normalize filter energy
     b = b / np.sqrt(np.sum(np.power(b, 2)))
     return b
-
+#%%----------------------------------------------------------------------------
 def code_bpsk(list_in):
     """ BPSK modulation
     """    
     return list(map(lambda i:(list_in[i]*2-1)+1j*0, range(0, len(list_in))))
-
+#%%----------------------------------------------------------------------------
+def decode_bpsk(list_in, umbral):
+    """ BPSK demodulation
+    """    
+    return list(map(lambda i:-1 if list_in[i] < umbral else 1, range(0, len(list_in))))
+#%%----------------------------------------------------------------------------
 def code_qpsk(list_in):
     list_i  = list_in[::2]
     list_ii = list(map(lambda i:list_i[i]*2-1, range(0, len(list_i))))
@@ -105,3 +111,5 @@ def code_qpsk(list_in):
     list_qq = list(map(lambda i:list_q[i]*2-1, range(0, len(list_q))))
     amp = np.sqrt(2)/2
     return list(map(lambda i:amp*(list_ii[i]+1j*list_qq[i]), range(0, len(list_i))))
+#%%----------------------------------------------------------------------------
+
